@@ -2,20 +2,23 @@ package pl.sdacademy.animals.bear;
 
 import pl.sdacademy.animals.Animal;
 
+import java.time.LocalDate;
+
 
 public abstract class Bear implements Animal {
 
     private int weight;
-    private boolean isAlive;
+    private LocalDate lastMealDate;
 
     public Bear(int weight) {
         this.weight = weight;
-        this.isAlive = true;
+        this.lastMealDate = LocalDate.now();
     }
 
     @Override
     public boolean isAlive() {
-        return isAlive;
+        LocalDate now = LocalDate.now();
+        return lastMealDate.compareTo(now.minusDays(10)) >= 0;
     }
 
     public void eat() {
@@ -26,4 +29,7 @@ public abstract class Bear implements Animal {
         return weight;
     }
 
+    public void setLastMealDate(LocalDate lastMealDate) {
+        this.lastMealDate = lastMealDate;
+    }
 }
