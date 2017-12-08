@@ -50,16 +50,16 @@ class BearTest {
     }
 
     class TestClock implements Clock {
-        int counter = 0;
+
+        private DateTime time = DateTime.now();
 
         @Override
         public DateTime getCurrentTime() {
-            counter++;
-            if (counter > 1) {
-                return DateTime.now().plusDays(10);
-            } else {
-                return DateTime.now();
-            }
+            return time;
+        }
+
+        public void changeTimeByDays(int days) {
+            time = time.plusDays(days);
         }
     }
 
