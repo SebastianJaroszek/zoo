@@ -98,4 +98,16 @@ class BearSpec extends Specification {
         bear.getWeight() == weight + (int)(waterWeight * 0.75)
     }
 
+    def "Bear should lost weight by 5% after poop"(){
+        given:
+        int weight = 3
+        Bear bear = new BlackBear(weight)
+
+        when:
+        bear.poop()
+
+        then:
+        bear.getWeight() == weight - (int)(weight * 0.05)
+    }
+
 }

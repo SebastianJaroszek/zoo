@@ -48,4 +48,8 @@ public abstract class Bear implements Animal {
         return weight;
     }
 
+    public void poop(){
+        this.weight = this.weight - (int)(this.weight * 0.05);
+    }
+
 }
