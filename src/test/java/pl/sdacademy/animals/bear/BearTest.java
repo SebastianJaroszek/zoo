@@ -38,9 +38,10 @@ class BearTest {
     void BearShouldNotBeAliveIfItHasEatenWithinMoreThan10Days() {
         //given:
         int weight = 3;
-        Clock clock = new TestClock();
+        TestClock clock = new TestClock();
         Bear bear = new BlackBear(weight, clock);
         bear.eat();
+        clock.changeTimeByDays(10);
 
         //when:
         boolean result = bear.isAlive();
