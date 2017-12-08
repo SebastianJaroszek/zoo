@@ -37,7 +37,6 @@ class BearSpec extends Specification {
         def clock = new TestClock()
         Bear bear = new BlackBear(weight, clock)
         bear.eat()
-        clock.changeTimeByDays(10)
 
         when:
         boolean result = bear.isAlive()
@@ -47,16 +46,15 @@ class BearSpec extends Specification {
     }
 
     class TestClock implements Clock {
-
-        private DateTime time = DateTime.now();
+        int counter = 0;
 
         @Override
         DateTime getCurrentTime() {
-            return DateTime.now()
-        }
-
-        public void changeTimeByDays(int days) {
-            time = time.plusDays(days)
+            counter++
+            if (counter > 1)
+                return DateTime.now().plusDays(10)
+            else
+                return DateTime.now()
         }
     }
 
