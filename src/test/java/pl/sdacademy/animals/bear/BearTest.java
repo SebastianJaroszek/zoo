@@ -91,4 +91,18 @@ class BearTest {
         assertTrue(bear.getWeight() == weight + weightOfMeal);
     }
 
+    @Test
+    void BearShouldGainedBy3of4WaterWeight() {
+        //given:
+        int weight = 3;
+        double waterWeight = 1.5;
+        Bear bear = new BlackBear(weight);
+
+        //when:
+        bear.drink(waterWeight);
+
+        //then:
+        assertTrue(bear.getWeight() == weight + (int) (waterWeight * 0.75));
+    }
+
 }

@@ -38,6 +38,11 @@ public abstract class Bear implements Animal {
         this.weight = this.weight + weight;
     }
 
+    public void drink(double waterWeight){
+        int waterWeightAfterCast = (int)waterWeight;
+        this.weight = this.weight + waterWeightAfterCast;
+    }
+
     @Override
     public int getWeight() {
         return weight;

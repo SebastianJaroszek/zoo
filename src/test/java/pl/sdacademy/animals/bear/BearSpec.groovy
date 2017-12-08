@@ -84,4 +84,18 @@ class BearSpec extends Specification {
         then:
         bear.getWeight() == weight + weightOfMeal
     }
+
+    def "Bear should gained by 3/4 water weight"(){
+        given:
+        int weight = 3
+        double waterWeight = 1.5
+        Bear bear = new BlackBear(weight)
+
+        when:
+        bear.drink(waterWeight)
+
+        then:
+        bear.getWeight() == weight + (int)(waterWeight * 0.75)
+    }
+
 }
