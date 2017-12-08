@@ -2,6 +2,7 @@ package pl.sdacademy.animals.bear;
 
 import org.joda.time.DateTime;
 import org.joda.time.Duration;
+import org.joda.time.format.DateTimeFormatter;
 import pl.sdacademy.animals.Animal;
 import pl.sdacademy.animals.time.Clock;
 import pl.sdacademy.animals.time.JodaClock;
@@ -50,6 +51,13 @@ public abstract class Bear implements Animal {
 
     public void poop(){
         this.weight = this.weight - (int)(this.weight * 0.05);
+    }
+
+    public boolean isHibernating(){
+        DateTime parse = DateTime.parse("dd-MM-yyyy");
+        //DateTimeFormatter formatter = new DateTimeFormatter("12-10-2000", parse);
+        clock.getCurrentTime();
+        return true;
     }
 
 }

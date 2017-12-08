@@ -1,7 +1,6 @@
 package pl.sdacademy.animals.bear
 
-import org.joda.time.DateTime
-import pl.sdacademy.animals.time.Clock
+import pl.sdacademy.animals.bear.time.TestClock
 import spock.lang.Specification
 
 class BearSpec extends Specification {
@@ -22,13 +21,12 @@ class BearSpec extends Specification {
         given:
         int weight = 3
         Bear bear = new BlackBear(weight)
-        bear.eat()
 
         when:
-        boolean result = bear.isAlive()
+        bear.eat()
 
         then:
-        result
+        bear.isAlive()
     }
 
     def "Bear should not be alive if it has eaten within more than 10 days"() {
@@ -37,33 +35,22 @@ class BearSpec extends Specification {
         def clock = new TestClock()
         Bear bear = new BlackBear(weight, clock)
         bear.eat()
-        clock.changeTimeByDays(10)
 
         when:
-        boolean result = bear.isAlive()
+        clock.changeTimeByDays(10)
 
         then:
-        result == false
+        bear.isAlive() == false
     }
 
-    class TestClock implements Clock {
-
-        private DateTime time = DateTime.now()
-
-        @Override
-        DateTime getCurrentTime() {
-            return time
-        }
-
-        public void changeTimeByDays(int days) {
-            time = time.plusDays(days)
-        }
-    }
-
-    def "Bear should be alive after eat"() {
+    def "Bear should reborn after eat"() {
         given:
         int weight = 3
-        Bear bear = new BlackBear(weight)
+        TestClock clock = new TestClock()
+        Bear bear = new BlackBear(weight, clock)
+        bear.eat()
+        clock.changeTimeByDays(10)
+        assert !bear.isAlive()
 
         when:
         bear.eat()
@@ -85,7 +72,7 @@ class BearSpec extends Specification {
         bear.getWeight() == weight + weightOfMeal
     }
 
-    def "Bear should gained by 3/4 water weight"(){
+    def "Bear should gained by 3/4 water weight"() {
         given:
         int weight = 3
         double waterWeight = 1.5
@@ -95,10 +82,10 @@ class BearSpec extends Specification {
         bear.drink(waterWeight)
 
         then:
-        bear.getWeight() == weight + (int)(waterWeight * 0.75)
+        bear.getWeight() == weight + (int) (waterWeight * 0.75)
     }
 
-    def "Bear should lost weight by 5% after poop"(){
+    def "Bear should lost weight by 5% after poop"() {
         given:
         int weight = 3
         Bear bear = new BlackBear(weight)
@@ -107,7 +94,20 @@ class BearSpec extends Specification {
         bear.poop()
 
         then:
-        bear.getWeight() == weight - (int)(weight * 0.05)
+        bear.getWeight() == weight - (int) (weight * 0.05)
+    }
+
+    def "BlackBear should be hibernating from 20 november to 15 march"() {
+        given:
+        int weight = 3
+        def clock = new TestClock()
+        Bear bear = new BlackBear(weight, clock)
+
+        when:
+        boolean result = bear.isHibernating()
+
+        then:
+        result
     }
 
 }

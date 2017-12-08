@@ -2,13 +2,14 @@ package pl.sdacademy.animals.bear;
 
 import org.joda.time.DateTime;
 import org.junit.jupiter.api.Test;
+import pl.sdacademy.animals.bear.time.TestClock;
 import pl.sdacademy.animals.time.Clock;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class BearTest {
     @Test
-    void BearShouldBeAliveImmediatelyAfterCreation() {
+    void bearShouldBeAliveImmediatelyAfterCreation() {
         //given:
         int weight = 3;
         Bear bear = new BlackBear(weight);
@@ -21,64 +22,52 @@ class BearTest {
     }
 
     @Test
-    void BearShouldBeAliveIfItHasEatenWithin10Days() {
+    void bearShouldBeAliveIfItHasEatenWithin10Days() {
         //given:
         int weight = 3;
         Bear bear = new BlackBear(weight);
+
+        //when:
+        bear.eat();
+
+        //then:
+        assertTrue(bear.isAlive());
+    }
+
+    @Test
+    void bearShouldNotBeAliveIfItHasEatenWithinMoreThan10Days() {
+        //given:
+        int weight = 3;
+        TestClock clock = new TestClock();
+        Bear bear = new BlackBear(weight, clock);
         bear.eat();
 
         //when:
-        boolean result = bear.isAlive();
+        clock.changeTimeByDays(10);
 
         //then:
-        assertTrue(result);
+        assertTrue(bear.isAlive() == false);
     }
 
     @Test
-    void BearShouldNotBeAliveIfItHasEatenWithinMoreThan10Days() {
+    void bearShouldRebornAfterEat() {
         //given:
         int weight = 3;
         TestClock clock = new TestClock();
         Bear bear = new BlackBear(weight, clock);
         bear.eat();
         clock.changeTimeByDays(10);
-
-        //when:
-        boolean result = bear.isAlive();
-
-        //then:
-        assertTrue(result == false);
-    }
-
-    class TestClock implements Clock {
-
-        private DateTime time = DateTime.now();
-
-        @Override
-        public DateTime getCurrentTime() {
-            return time;
-        }
-
-        public void changeTimeByDays(int days) {
-            time = time.plusDays(days);
-        }
-    }
-
-    @Test
-    void BearShouldBeAliveAfterEat() {
-        //given:
-        int weight = 3;
-        Bear bear = new BlackBear(weight);
+        assert !bear.isAlive();
 
         //when:
         bear.eat();
 
         //then:
-        bear.isAlive();
+        assertTrue(bear.isAlive());
     }
 
     @Test
-    void BearShouldGainedByMealWeight() {
+    void bearShouldGainedByMealWeight() {
         //given:
         int weight = 3;
         int weightOfMeal = 3;
@@ -92,7 +81,7 @@ class BearTest {
     }
 
     @Test
-    void BearShouldGainedBy3of4WaterWeight() {
+    void bearShouldGainedBy3of4WaterWeight() {
         //given:
         int weight = 3;
         double waterWeight = 1.5;
@@ -106,7 +95,7 @@ class BearTest {
     }
 
     @Test
-    void BearShouldLostWeightBy5PercentAfterPoop() {
+    void bearShouldLostWeightBy5PercentAfterPoop() {
         //given:
         int weight = 3;
         Bear bear = new BlackBear(weight);
