@@ -10,4 +10,9 @@ public class PolarBear extends Bear {
     public PolarBear(int weight, Clock clock) {
         super(weight, clock);
     }
+
+    @Override
+    public boolean isHibernating() {
+        return isHibernatingWithAllArgs(5, 5, 10, 10);
+    }
 }

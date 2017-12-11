@@ -2,9 +2,12 @@ package pl.sdacademy.animals.bear;
 
 import org.joda.time.DateTime;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
 import pl.sdacademy.animals.bear.time.TestClock;
 import pl.sdacademy.animals.time.Clock;
 
+import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 
 class BearTest {
@@ -106,5 +109,27 @@ class BearTest {
         //then:
         assertTrue(bear.getWeight() == weight - (int) (weight * 0.05));
     }
+
+    /*@ParameterizedTest
+    @ValueSource(months = {5, 11, 3})
+    @ValueSource(days = {1, 19, 16})
+    void blackBearShouldBeHibernatingFrom20NovemberTo15March(int month, int day) {
+        //given:
+        int weight = 3;
+        TestClock clock = new TestClock();
+        clock.getCurrentTime() >> date
+        Bear bear = new BlackBear(weight, clock);
+
+        when:
+        boolean result = bear.isHibernating()
+
+        then:
+        assertThat(result).isFalse()
+
+        where:
+        date << [new DateTime(2017, 05, 01, 14, 0),
+                new DateTime(2017, 11, 19, 14, 0),
+                new DateTime(2017, 03, 16, 14, 0)]
+    }*/
 
 }
